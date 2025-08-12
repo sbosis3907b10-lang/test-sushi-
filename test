@@ -1,0 +1,19 @@
+local keys = {"Q", "E", "R", "F"}
+local highlightColor = Color3.fromRGB(255, 255, 0)
+
+local function pressKey(key)
+    keypress(string.byte(key))
+    task.wait(0.05)
+    keyrelease(string.byte(key))
+end
+
+while task.wait(0.1) do
+    for _, guiElement in pairs(game:GetService("Players").LocalPlayer.PlayerGui:GetDescendants()) do
+        if (guiElement:IsA("TextLabel") or (guiElement:IsA("TextButton")) then
+            if guiElement.TextColor3 == highlightColor and table.find(keys, guiElement.Text) then
+                pressKey(guiElement.Text)
+                break
+            end
+        end
+    end
+end
