@@ -1,17 +1,13 @@
 local keys = {"Q", "E", "R", "F"}
-local highlightColor = Color3.fromRGB(255, 255, 0)
-
-local function pressKey(key)
-    keypress(string.byte(key))
-    task.wait(0.05)
-    keyrelease(string.byte(key))
-end
+local highlightColor = Color3.fromHex("F5CE52")
 
 while task.wait(0.1) do
-    for _, guiElement in pairs(game:GetService("Players").LocalPlayer.PlayerGui:GetDescendants()) do
-        if (guiElement:IsA("TextLabel") or (guiElement:IsA("TextButton")) then
-            if guiElement.TextColor3 == highlightColor and table.find(keys, guiElement.Text) then
-                pressKey(guiElement.Text)
+    for _, element in pairs(game:GetService("Players").LocalPlayer.PlayerGui:GetDescendants()) do
+        if (element:IsA("TextButton") or (element:IsA("TextLabel")) then
+            if element.TextColor3 == highlightColor and table.find(keys, element.Text) then
+                game:GetService("VirtualInputManager"):SendKeyEvent(true, element.Text, false, game)
+                task.wait(0.05)
+                game:GetService("VirtualInputManager"):SendKeyEvent(false, element.Text, false, game)
                 break
             end
         end
